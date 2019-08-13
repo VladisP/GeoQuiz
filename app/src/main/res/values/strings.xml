@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Викторина по географии</string>
+    <string name="question_Moscow">Москва - столица России?</string>
+    <string name="question_Sydney">Сидней - столица Австралии?</string>
+    <string name="question_London">Лондон - столица Великобритании?</string>
+    <string name="question_NewYork">Нью-Йорк - столица США?</string>
+    <string name="question_Gothenburg">Гетеборг - столица Швеции?</string>
+    <string name="true_btn">Верно</string>
+    <string name="false_btn">Неверно</string>
+    <string name="correct_answer">Правильно!</string>
+    <string name="incorrect_answer">Неправильно!</string>
+    <string name="next_question">Следующий вопрос</string>
+    <string name="prev_question">Предыдущий вопрос</string>
+</resources>
