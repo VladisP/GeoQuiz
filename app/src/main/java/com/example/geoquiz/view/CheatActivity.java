@@ -15,8 +15,10 @@ public class CheatActivity extends AppCompatActivity {
 
     private static final String EXTRA_ANSWER_IS_TRUE = "com.example.geoquiz.answer_is_true";
     private static final String EXTRA_ANSWER_SHOWN = "com.example.geoquiz.answer_shown";
+    private static final String KEY_CHEATER = "cheater";
 
     private boolean mAnswerIsTrue;
+    private boolean mIsUserCheater = false;
 
     private TextView mAnswerTextView;
     private Button mShowAnswerButton;
@@ -37,6 +39,10 @@ public class CheatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cheat);
 
         mAnswerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false);
+
+        if (savedInstanceState != null) {
+            mIsUserCheater = savedInstanceState.getBoolean(KEY_CHEATER, false);
+        }
     }
 
     @Override
@@ -51,17 +57,33 @@ public class CheatActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        if (mIsUserCheater) {
+            setAnswerText();
+            setAnswerShownResult();
+        }
+
         mShowAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mAnswerIsTrue) {
-                    mAnswerTextView.setText(R.string.correct_answer);
-                } else {
-                    mAnswerTextView.setText(R.string.incorrect_answer);
-                }
+                setAnswerText();
+                mIsUserCheater = true;
                 setAnswerShownResult();
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(KEY_CHEATER, mIsUserCheater);
+    }
+
+    private void setAnswerText() {
+        if (mAnswerIsTrue) {
+            mAnswerTextView.setText(R.string.correct_answer);
+        } else {
+            mAnswerTextView.setText(R.string.incorrect_answer);
+        }
     }
 
     private void setAnswerShownResult() {
