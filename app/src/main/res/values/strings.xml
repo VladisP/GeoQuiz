@@ -11,4 +11,8 @@
     <string name="incorrect_answer">Неправильно!</string>
     <string name="next_question">Следующий вопрос</string>
     <string name="prev_question">Предыдущий вопрос</string>
+    <string name="warning_text">Вы уверены, что хотите сделать это?</string>
+    <string name="show_answer">Показать ответ</string>
+    <string name="cheat">Чит!</string>
+    <string name="judgement_message">Вы поступили нехорошо :(</string>
 </resources>
