@@ -12,6 +12,8 @@ public interface QuizPresenter {
 
     void onQuizViewDestroyed();
 
+    void userIsCheater();
+
     Bundle getSaveBundle();
 
     int getQuestionTextId();
@@ -19,6 +21,8 @@ public interface QuizPresenter {
     boolean isQuestionCompleted();
 
     boolean isQuestionFirst();
+
+    boolean isAnswerTrue();
 
     interface QuizView {
 

@@ -1,5 +1,7 @@
 package com.example.geoquiz.view;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -7,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.geoquiz.R;
@@ -17,9 +20,11 @@ import com.example.geoquiz.repository.QuizRepositoryImpl;
 public class QuizActivity extends AppCompatActivity implements QuizPresenter.QuizView {
 
     private static final String KEY_SAVE_BUNDLE = "save_bundle";
+    private static final int REQUEST_CODE_CHEAT = 0;
 
     private Button mTrueButton;
     private Button mFalseButton;
+    private Button mCheatButton;
     private ImageButton mNextButton;
     private ImageButton mPrevButton;
     private TextView mQuestionTextView;
@@ -52,6 +57,7 @@ public class QuizActivity extends AppCompatActivity implements QuizPresenter.Qui
         mQuestionTextView = findViewById(R.id.question_text_view);
         mTrueButton = findViewById(R.id.btn_true);
         mFalseButton = findViewById(R.id.btn_false);
+        mCheatButton = findViewById(R.id.cheat_button);
         mNextButton = findViewById(R.id.next_btn);
         mPrevButton = findViewById(R.id.prev_btn);
 
@@ -76,6 +82,14 @@ public class QuizActivity extends AppCompatActivity implements QuizPresenter.Qui
             }
         });
 
+        mCheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = CheatActivity.newIntent(QuizActivity.this, mQuizPresenter.isAnswerTrue());
+                startActivityForResult(intent, REQUEST_CODE_CHEAT);
+            }
+        });
+
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,6 +103,21 @@ public class QuizActivity extends AppCompatActivity implements QuizPresenter.Qui
                 mQuizPresenter.onPrevButtonPressed();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        if (requestCode == REQUEST_CODE_CHEAT) {
+            if (data == null) {
+                return;
+            }
+            if (CheatActivity.wasAnswerShown(data)) {
+                mQuizPresenter.userIsCheater();
+            }
+        }
     }
 
     @Override
